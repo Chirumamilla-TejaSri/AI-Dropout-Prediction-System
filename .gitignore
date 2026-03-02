@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.pyc
+venv/
+.env
+.env.*
+
+# Dataset
+backend/data/
+*.csv
+*.xlsx
+
+# Model files
+*.pkl
+
+# Node
+frontend/node_modules/
+dist/
+build/
+
+# Zip files
+*.zip
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
