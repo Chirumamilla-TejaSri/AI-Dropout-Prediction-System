@@ -6,9 +6,18 @@ const Settingspage = () => {
   const [autoSave, setAutoSave] = useState(true);
   const [darkMode, setDarkMode] = useState(true);
 
+  // ✅ Added state for profile
+  const [fullName, setFullName] = useState("Admin User");
+  const [email, setEmail] = useState("");
+
   const clearPredictions = () => {
     localStorage.removeItem("predictions");
     alert("Stored predictions cleared");
+  };
+
+  const handleSave = () => {
+    console.log("Saved Data:", { fullName, email });
+    alert("Profile updated successfully ✅");
   };
 
   return (
@@ -34,31 +43,40 @@ const Settingspage = () => {
           </h2>
 
           <div className="grid grid-cols-2 gap-8">
+
+            {/* Full Name */}
             <div>
               <label className="text-gray-400 text-sm">
                 Full Name
               </label>
               <input
                 type="text"
-                defaultValue="Admin User"
-                className="w-full mt-2 p-3 rounded-xl bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                className="w-full mt-2 p-3 rounded-xl bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white"
               />
             </div>
 
+            {/* Email */}
             <div>
               <label className="text-gray-400 text-sm">
                 Email
               </label>
               <input
                 type="email"
-                value="tejasrichirumamilla@gmail.com"
-                readOnly
-                className="w-full mt-2 p-3 rounded-xl bg-white/10 border border-white/20 text-gray-400"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter email"
+                className="w-full mt-2 p-3 rounded-xl bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-white"
               />
             </div>
+
           </div>
 
-          <button className="bg-gradient-to-r from-indigo-600 to-blue-600 px-6 py-3 rounded-xl font-semibold hover:scale-105 transition shadow-lg shadow-indigo-500/30">
+          <button
+            onClick={handleSave}
+            className="bg-gradient-to-r from-indigo-600 to-blue-600 px-6 py-3 rounded-xl font-semibold hover:scale-105 transition shadow-lg shadow-indigo-500/30"
+          >
             Save Changes
           </button>
         </div>
@@ -88,7 +106,7 @@ const Settingspage = () => {
           />
         </div>
 
-        {/* Storage Section (Clean Version of Danger Zone) */}
+        {/* Storage Section */}
         <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 space-y-6 shadow-xl">
           <h2 className="text-2xl font-semibold">
             Storage Management
