@@ -129,7 +129,7 @@ def send_student_invite():
 
     import os
     link = f"{os.getenv('FRONTEND_URL')}/onboard/student/{token}"
-    send_invite_email(email, link)
+    send_invite_email(email, link, "student")
 
     return jsonify({"success": True})
 

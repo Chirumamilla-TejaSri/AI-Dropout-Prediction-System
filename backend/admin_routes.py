@@ -27,7 +27,7 @@ def create_invite(email):
 
     import os
     link = f"{os.getenv('FRONTEND_URL')}/onboard/counselor/{token}"
-    send_invite_email(email, link)
+    send_invite_email(email, link, "counselor")
 
     return link
 
