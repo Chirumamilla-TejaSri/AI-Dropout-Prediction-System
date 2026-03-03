@@ -10,3 +10,5 @@ scikit-learn
 google-auth
 reportlab
 openpyxl
+gunicorn
+pymysql
