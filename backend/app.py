@@ -11,7 +11,7 @@ from student_routes import student_routes
 from flask import send_from_directory
 import os
 from dotenv import load_dotenv
-
+# AI model integration added
 load_dotenv()
 
 app = Flask(__name__)
