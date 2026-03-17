@@ -46,13 +46,13 @@ export default function StudentDashboard() {
   const { profile, prediction, notes, assignments } = data;
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] text-white">
+    <div className="flex min-h-screen bg-gradient-to-br from-slate-950 to-indigo-950 text-white">
 
       {/* SIDEBAR */}
-      <div className="w-64 bg-black/40 backdrop-blur-2xl border-r border-white/10 p-6 flex flex-col justify-between">
+      <div className="w-64 bg-white/5 backdrop-blur-xl border-r border-white/10 p-6 flex flex-col">
 
         <div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent mb-8">
+          <h1 className="text-2xl font-bold mb-8">
             Student Panel
           </h1>
 
@@ -62,14 +62,14 @@ export default function StudentDashboard() {
           <SidebarItem label="Profile" active={activeTab === "profile"} onClick={() => setActiveTab("profile")} />
         </div>
 
-        <div className="h-32 bg-gradient-to-t from-violet-600/30 blur-2xl rounded-full"></div>
+        <div className="h-32 bg-gradient-to-t from-slate-700/30 blur-2xl rounded-full"></div>
       </div>
 
       {/* MAIN */}
-      <div className="flex-1 p-8 overflow-y-auto">
+      <div className="flex-1 flex flex-col">
 
         {/* TOP NAV */}
-        <div className="flex justify-end items-center gap-6 mb-8">
+        <div className="flex justify-end items-center gap-6 p-6 border-b border-white/10">
 
           {/* NOTIFICATION */}
           <div className="relative">
@@ -95,9 +95,9 @@ export default function StudentDashboard() {
           setNotifications(res.data);
         }
       }}
-              className="relative bg-indigo-600/30 p-2 rounded-full hover:bg-indigo-600 transition cursor-pointer"
+              className="relative bg-white/10 p-2 rounded-full hover:bg-indigo-600 transition cursor-pointer"
             >
-              <Bell size={18} className="text-indigo-300" />
+              <Bell size={18} className="text-indigo-400" />
               {notificationCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-600 text-[10px] px-1.5 rounded-full">
                   {notificationCount}
@@ -106,7 +106,7 @@ export default function StudentDashboard() {
             </div>
 
             {dropdownOpen && (
-              <div className="absolute right-0 mt-3 w-72 bg-[#1e1b4b] border border-white/10 rounded-2xl shadow-xl z-50 max-h-80 overflow-y-auto">
+              <div className="absolute right-0 mt-3 w-72 bg-slate-900 border border-white/10 rounded-2xl shadow-xl z-50 max-h-80 overflow-y-auto">
                 <div className="p-3 border-b border-white/10 font-semibold">
                   Notifications
                 </div>
@@ -136,7 +136,7 @@ export default function StudentDashboard() {
             onClick={() => setActiveTab("profile")}
             className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition"
           >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-violet-500 to-purple-600 flex items-center justify-center font-bold">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-blue-600 flex items-center justify-center font-bold">
               {profile.name.charAt(0)}
             </div>
             <span className="text-sm">{profile.name}</span>
@@ -144,26 +144,28 @@ export default function StudentDashboard() {
 
         </div>
 
-        {/* TABS */}
-        {activeTab === "dashboard" && (
-          <DashboardSection profile={profile} prediction={prediction} />
-        )}
+        <div className="p-10 overflow-y-auto">
+          {/* TABS */}
+          {activeTab === "dashboard" && (
+            <DashboardSection profile={profile} prediction={prediction} />
+          )}
 
-        {activeTab === "counseling" && (
-          <CounselingSection notes={notes} profile={profile} />
-        )}
+          {activeTab === "counseling" && (
+            <CounselingSection notes={notes} profile={profile} />
+          )}
 
-        {activeTab === "assignments" && (
-          <AssignmentSection assignments={assignments} />
-        )}
+          {activeTab === "assignments" && (
+            <AssignmentSection assignments={assignments} />
+          )}
 
-        {activeTab === "profile" && (
-          <ProfileSection
-            profile={profile}
-            profileImage={profileImage}
-            setProfileImage={setProfileImage}
-          />
-        )}
+          {activeTab === "profile" && (
+            <ProfileSection
+              profile={profile}
+              profileImage={profileImage}
+              setProfileImage={setProfileImage}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
@@ -176,8 +178,8 @@ function SidebarItem({ label, active, onClick }) {
       onClick={onClick}
       className={`w-full text-left px-4 py-3 rounded-xl mb-3 transition-all duration-300 ${
         active
-          ? "bg-gradient-to-r from-violet-600 to-purple-600 shadow-lg"
-          : "hover:bg-white/10"
+          ? "bg-indigo-600 text-white"
+          : "hover:bg-white/10 text-slate-300"
       }`}
     >
       {label}
@@ -256,7 +258,7 @@ function CounselingSection({ notes, profile }) {
           <div key={i} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6">
 
             <div className="flex justify-between mb-2">
-              <span className="bg-violet-600/30 px-3 py-1 rounded-full text-sm">
+              <span className="bg-indigo-600/30 px-3 py-1 rounded-full text-sm">
                 {n.note_type}
               </span>
               <span className="text-slate-400 text-sm">
@@ -306,7 +308,7 @@ function CounselingSection({ notes, profile }) {
 
               <button
                 onClick={() => handleReply(n.id)}
-                className="bg-gradient-to-r from-violet-600 to-purple-600 px-4 py-2 rounded-xl"
+                className="bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 px-4 py-2 rounded-xl"
               >
                 Send Reply
               </button>
@@ -369,6 +371,13 @@ function ProfileSection({ profile, profileImage, setProfileImage }) {
 
   const removePhoto = () => setProfileImage(null);
 
+  const handleLogout = () => {
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("role");
+    localStorage.removeItem("admin_branch");
+    window.location.href = "/login";
+  };
+
   const saveProfile = async () => {
     setSaving(true);
     await axios.post(
@@ -397,7 +406,7 @@ function ProfileSection({ profile, profileImage, setProfileImage }) {
           </div>
 
           <div className="flex gap-3">
-            <label className="bg-violet-600 px-4 py-2 rounded-xl cursor-pointer hover:bg-violet-700 transition">
+            <label className="bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 px-4 py-2 rounded-xl cursor-pointer transition hover:opacity-90">
               Upload
               <input type="file" className="hidden" onChange={handleUpload} />
             </label>
@@ -433,11 +442,26 @@ function ProfileSection({ profile, profileImage, setProfileImage }) {
         <button
           onClick={saveProfile}
           disabled={saving}
-          className="w-full bg-gradient-to-r from-violet-600 to-purple-600 py-3 rounded-xl font-semibold hover:scale-[1.02] transition"
+          className="w-full bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 py-3 rounded-xl font-semibold hover:scale-[1.02] transition"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>
 
+      </div>
+
+      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 space-y-4 mt-8">
+        <h3 className="text-2xl font-semibold">
+          Logout
+        </h3>
+        <p className="text-slate-400">
+          Sign out of the student dashboard on this device.
+        </p>
+        <button
+          onClick={handleLogout}
+          className="bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 px-6 py-3 rounded-xl font-semibold hover:scale-[1.02] transition"
+        >
+          Logout
+        </button>
       </div>
     </>
   );

@@ -15,7 +15,7 @@ const AdminDashboard = () => {
 
         {/* Header */}
         <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
-          Welcome to Admin Dashboard 👩‍💻
+          Welcome to Admin Dashboard 
         </h1>
 
         <p className="text-slate-400 mb-12 text-lg">

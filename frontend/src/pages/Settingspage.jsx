@@ -15,6 +15,14 @@ const Settingspage = () => {
     alert("Stored predictions cleared");
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("role");
+    localStorage.removeItem("admin_branch");
+    localStorage.removeItem("predictions");
+    window.location.href = "/login";
+  };
+
   const handleSave = () => {
     console.log("Saved Data:", { fullName, email });
     alert("Profile updated successfully ✅");
@@ -121,6 +129,21 @@ const Settingspage = () => {
             className="bg-gradient-to-r from-gray-700 to-gray-800 px-6 py-3 rounded-xl hover:scale-105 transition shadow-lg"
           >
             Clear Stored Predictions
+          </button>
+        </div>
+
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 space-y-4 shadow-xl">
+          <h2 className="text-2xl font-semibold">
+            Logout
+          </h2>
+          <p className="text-gray-400 text-sm">
+            Sign out of the admin dashboard on this device.
+          </p>
+          <button
+            onClick={handleLogout}
+            className="bg-gradient-to-r from-indigo-600 to-blue-600 px-6 py-3 rounded-xl font-semibold hover:scale-105 transition shadow-lg shadow-indigo-500/30"
+          >
+            Logout
           </button>
         </div>
 
