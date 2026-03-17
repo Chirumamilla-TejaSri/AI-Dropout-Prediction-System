@@ -74,7 +74,7 @@ export default function Notes() {
   return (
     <div className="space-y-14">
 
-      <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent inline-block">
+      <h1 className="text-4xl font-bold text-white">
         Counseling Notes
       </h1>
 
