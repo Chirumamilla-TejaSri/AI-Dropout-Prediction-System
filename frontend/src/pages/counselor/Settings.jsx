@@ -62,7 +62,7 @@ export default function Settings() {
   return (
     <div className="space-y-14">
 
-      <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+      <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent inline-block">
         Profile Settings
       </h1>
 
@@ -70,7 +70,7 @@ export default function Settings() {
 
         {/* Avatar */}
         <div className="flex items-center gap-6">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center text-2xl font-bold">
+          <div className="w-20 h-20 rounded-full bg-gradient-to-r from-indigo-500 to-blue-500 flex items-center justify-center text-2xl font-bold">
             {profile.full_name
               ? profile.full_name.charAt(0).toUpperCase()
               : "C"}
@@ -147,7 +147,7 @@ export default function Settings() {
         <button
           onClick={updateProfile}
           disabled={loading}
-          className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg disabled:opacity-50"
+          className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg disabled:opacity-50"
         >
           {loading ? "Updating..." : "Save Changes"}
         </button>
@@ -169,7 +169,7 @@ export default function Settings() {
         </p>
         <button
           onClick={handleLogout}
-          className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg"
+          className="bg-gradient-to-r from-indigo-600 to-blue-600 px-6 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg"
         >
           Logout
         </button>
@@ -178,3 +178,6 @@ export default function Settings() {
     </div>
   );
 }
+
+
+

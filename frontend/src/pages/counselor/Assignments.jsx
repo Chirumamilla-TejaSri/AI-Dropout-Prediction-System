@@ -103,7 +103,7 @@ export default function Assignments() {
     <div className="space-y-14">
 
       {/* CREATE ASSIGNMENT */}
-      <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+      <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent inline-block">
         Create Assignment
       </h1>
 
@@ -160,7 +160,7 @@ export default function Assignments() {
 
         <button
           onClick={createAssignment}
-          className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 py-3 rounded-xl"
+          className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 py-3 rounded-xl"
         >
           Create Assignment
         </button>
@@ -217,3 +217,6 @@ export default function Assignments() {
     </div>
   );
 }
+
+
+

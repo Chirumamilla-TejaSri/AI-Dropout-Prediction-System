@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Bell } from "lucide-react";
+import {
+  Bell,
+  LayoutDashboard,
+  BookOpen,
+  FileText,
+  UserCircle
+} from "lucide-react";
 
 const API = "http://localhost:5000";
 
@@ -32,7 +38,6 @@ export default function StudentDashboard() {
       .get(`${API}/student/notifications/list/${userId}`)
       .then((res) => setNotifications(res.data))
       .catch((err) => console.error(err));
-
   }, [userId]);
 
   if (!data) {
@@ -50,16 +55,35 @@ export default function StudentDashboard() {
 
       {/* SIDEBAR */}
       <div className="w-64 bg-white/5 backdrop-blur-xl border-r border-white/10 p-6 flex flex-col">
-
         <div>
-          <h1 className="text-2xl font-bold mb-8">
-            Student Panel
-          </h1>
+          <h1 className="text-2xl font-bold mb-10">Student</h1>
 
-          <SidebarItem label="Dashboard" active={activeTab === "dashboard"} onClick={() => setActiveTab("dashboard")} />
-          <SidebarItem label="Counseling" active={activeTab === "counseling"} onClick={() => setActiveTab("counseling")} />
-          <SidebarItem label="Assignments" active={activeTab === "assignments"} onClick={() => setActiveTab("assignments")} />
-          <SidebarItem label="Profile" active={activeTab === "profile"} onClick={() => setActiveTab("profile")} />
+          <nav className="flex flex-col gap-4 text-sm">
+            <SidebarItem
+              label="Dashboard"
+              icon={<LayoutDashboard size={18} />}
+              active={activeTab === "dashboard"}
+              onClick={() => setActiveTab("dashboard")}
+            />
+            <SidebarItem
+              label="Counseling"
+              icon={<BookOpen size={18} />}
+              active={activeTab === "counseling"}
+              onClick={() => setActiveTab("counseling")}
+            />
+            <SidebarItem
+              label="Assignments"
+              icon={<FileText size={18} />}
+              active={activeTab === "assignments"}
+              onClick={() => setActiveTab("assignments")}
+            />
+            <SidebarItem
+              label="Profile"
+              icon={<UserCircle size={18} />}
+              active={activeTab === "profile"}
+              onClick={() => setActiveTab("profile")}
+            />
+          </nav>
         </div>
 
         <div className="h-32 bg-gradient-to-t from-slate-700/30 blur-2xl rounded-full"></div>
@@ -69,32 +93,32 @@ export default function StudentDashboard() {
       <div className="flex-1 flex flex-col">
 
         {/* TOP NAV */}
-        <div className="flex justify-end items-center gap-6 p-6 border-b border-white/10">
+        <div className="flex justify-end items-center p-6 border-b border-white/10">
 
           {/* NOTIFICATION */}
           <div className="relative">
             <div
               onClick={async () => {
-  const newState = !dropdownOpen;
-        setDropdownOpen(newState);
+                const newState = !dropdownOpen;
+                setDropdownOpen(newState);
 
-        if (!dropdownOpen) {
-          for (const n of notifications) {
-            if (!n.is_read) {
-              await axios.post(
-                `${API}/student/notifications/read/${n.id}`
-              );
-            }
-          }
+                if (!dropdownOpen) {
+                  for (const n of notifications) {
+                    if (!n.is_read) {
+                      await axios.post(
+                        `${API}/student/notifications/read/${n.id}`
+                      );
+                    }
+                  }
 
-          setNotificationCount(0);
+                  setNotificationCount(0);
 
-          const res = await axios.get(
-            `${API}/student/notifications/list/${userId}`
-          );
-          setNotifications(res.data);
-        }
-      }}
+                  const res = await axios.get(
+                    `${API}/student/notifications/list/${userId}`
+                  );
+                  setNotifications(res.data);
+                }
+              }}
               className="relative bg-white/10 p-2 rounded-full hover:bg-indigo-600 transition cursor-pointer"
             >
               <Bell size={18} className="text-indigo-400" />
@@ -131,17 +155,6 @@ export default function StudentDashboard() {
             )}
           </div>
 
-          {/* PROFILE */}
-          <div
-            onClick={() => setActiveTab("profile")}
-            className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition"
-          >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-blue-600 flex items-center justify-center font-bold">
-              {profile.name.charAt(0)}
-            </div>
-            <span className="text-sm">{profile.name}</span>
-          </div>
-
         </div>
 
         <div className="p-10 overflow-y-auto">
@@ -172,16 +185,17 @@ export default function StudentDashboard() {
 }
 
 /* SIDEBAR ITEM */
-function SidebarItem({ label, active, onClick }) {
+function SidebarItem({ label, icon, active, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left px-4 py-3 rounded-xl mb-3 transition-all duration-300 ${
+      className={`w-full text-left px-4 py-3 rounded-xl transition flex items-center gap-3 ${
         active
           ? "bg-indigo-600 text-white"
           : "hover:bg-white/10 text-slate-300"
       }`}
     >
+      {icon}
       {label}
     </button>
   );
@@ -201,11 +215,11 @@ function DashboardSection({ profile, prediction }) {
 
   return (
     <>
-      <h2 className="text-3xl font-bold mb-6">
-        Welcome back, {profile.name}
+      <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent inline-block">
+        Welcome, {profile.name}
       </h2>
 
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl">
         <StatCard label="CGPA" value={prediction?.cgpa ?? "N/A"} />
         <StatCard label="Attendance" value={prediction?.attendance ?? "N/A"} />
         <StatCard label="Backlogs" value={prediction?.backlogs ?? 0} />
@@ -308,7 +322,7 @@ function CounselingSection({ notes, profile }) {
 
               <button
                 onClick={() => handleReply(n.id)}
-                className="bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 px-4 py-2 rounded-xl"
+                className="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 px-4 py-2 rounded-xl"
               >
                 Send Reply
               </button>
@@ -383,14 +397,14 @@ function ProfileSection({ profile, profileImage, setProfileImage }) {
 
   return (
     <>
-      <h2 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent mb-6">
+      <h2 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent inline-block mb-6">
         Profile Settings
       </h2>
 
       <div className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-3xl p-10 space-y-8">
 
         <div className="flex items-center gap-6">
-          <div className="w-20 h-20 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center overflow-hidden text-2xl font-bold">
+          <div className="w-20 h-20 rounded-full bg-gradient-to-r from-indigo-500 to-blue-500 flex items-center justify-center overflow-hidden text-2xl font-bold">
             {profileImage ? (
               <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
             ) : (
@@ -436,7 +450,7 @@ function ProfileSection({ profile, profileImage, setProfileImage }) {
         <button
           onClick={saveProfile}
           disabled={saving}
-          className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg disabled:opacity-50"
+          className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>
@@ -452,7 +466,7 @@ function ProfileSection({ profile, profileImage, setProfileImage }) {
         </p>
         <button
           onClick={handleLogout}
-          className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg"
+          className="bg-gradient-to-r from-indigo-600 to-blue-600 px-6 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg"
         >
           Logout
         </button>
@@ -469,3 +483,6 @@ function StatCard({ label, value }) {
     </div>
   );
 }
+
+
+

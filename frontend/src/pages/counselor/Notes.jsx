@@ -61,7 +61,7 @@ export default function Notes() {
       case "Academic":
         return "bg-blue-600";
       case "Career":
-        return "bg-purple-600";
+        return "bg-blue-600";
       case "Warning":
         return "bg-red-600";
       case "Personal":
@@ -74,7 +74,7 @@ export default function Notes() {
   return (
     <div className="space-y-14">
 
-      <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+      <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent inline-block">
         Counseling Notes
       </h1>
 
@@ -123,7 +123,7 @@ export default function Notes() {
 
         <button
           onClick={addNote}
-          className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg"
+          className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg"
         >
           ➕ Save Note
         </button>
@@ -203,3 +203,5 @@ export default function Notes() {
     </div>
   );
 }
+
+

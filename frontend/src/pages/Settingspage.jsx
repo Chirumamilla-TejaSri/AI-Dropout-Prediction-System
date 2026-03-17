@@ -29,14 +29,14 @@ const Settingspage = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-[#0f172a] via-[#0b1120] to-[#111827] text-white">
+    <div className="flex min-h-screen bg-gradient-to-br from-slate-950 to-indigo-950 text-white">
       <Sidebar />
 
       <div className="flex-1 p-10 space-y-12">
 
         {/* Header */}
         <div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-blue-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold">
             Settings
           </h1>
           <p className="text-gray-400 mt-2">

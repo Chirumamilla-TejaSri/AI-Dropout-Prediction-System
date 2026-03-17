@@ -59,7 +59,7 @@ const Uploaddata = () => {
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#020617] text-white">
+    <div className="flex min-h-screen bg-gradient-to-br from-slate-950 to-indigo-950 text-white">
       
       <Sidebar />
 
@@ -69,7 +69,7 @@ const Uploaddata = () => {
 
           {/* Header */}
           <div>
-            <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+            <h1 className="text-4xl font-bold mb-3">
               Upload Student Academic Data
             </h1>
 
