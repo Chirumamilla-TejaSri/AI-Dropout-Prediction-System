@@ -48,7 +48,7 @@ export default function Dashboard() {
       {/* HEADER */}
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent inline-block">
             Counselor Dashboard
           </h1>
           <p className="text-slate-400 mt-2">
@@ -187,3 +187,4 @@ function RiskBar({ label, value, percent, color }) {
     </div>
   );
 }
+

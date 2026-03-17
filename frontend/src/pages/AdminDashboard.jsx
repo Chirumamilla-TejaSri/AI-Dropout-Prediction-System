@@ -7,30 +7,24 @@ const AdminDashboard = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-[#0f172a] via-[#1e1b4b] to-[#020617] text-white">
-      
+    <div className="flex min-h-screen bg-gradient-to-br from-slate-950 to-indigo-950 text-white">
       <Sidebar />
 
-      <div className="flex-1 p-12">
+      <div className="flex-1 p-10">
 
-        {/* Header */}
-        <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
-          Welcome to Admin Dashboard 👩‍💻
-        </h1>
-
-        <p className="text-slate-400 mb-12 text-lg">
-          Manage your academic risk monitoring system from here.
-        </p>
+        <div className="border-b border-white/10 pb-6 mb-10">
+          <h1 className="text-4xl font-bold mb-3 bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent inline-block">
+            Admin Dashboard
+          </h1>
+        </div>
 
         {/* Cards Section */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
 
           {/* Upload Card */}
           <div
             onClick={() => navigate("/admin/upload")}
-            className="relative cursor-pointer bg-white/5 backdrop-blur-2xl border border-white/10 
-                       rounded-3xl p-8 shadow-2xl hover:scale-[1.03] 
-                       hover:shadow-indigo-500/30 transition-all duration-300"
+            className="cursor-pointer bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-lg hover:scale-[1.02] transition duration-300"
           >
             <Upload className="mb-6 text-indigo-400" size={34} />
             <h2 className="text-2xl font-semibold mb-3">
@@ -44,9 +38,7 @@ const AdminDashboard = () => {
           {/* Predictions Card */}
           <div
             onClick={() => navigate("/admin/predictions")}
-            className="relative cursor-pointer bg-white/5 backdrop-blur-2xl border border-white/10 
-                       rounded-3xl p-8 shadow-2xl hover:scale-[1.03] 
-                       hover:shadow-green-500/30 transition-all duration-300"
+            className="cursor-pointer bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-lg hover:scale-[1.02] transition duration-300"
           >
             <BarChart3 className="mb-6 text-green-400" size={34} />
             <h2 className="text-2xl font-semibold mb-3">
@@ -60,9 +52,7 @@ const AdminDashboard = () => {
           {/* Counselors Card */}
           <div
             onClick={() => navigate("/admin/counselors")}
-            className="relative cursor-pointer bg-white/5 backdrop-blur-2xl border border-white/10 
-                       rounded-3xl p-8 shadow-2xl hover:scale-[1.03] 
-                       hover:shadow-purple-500/30 transition-all duration-300"
+            className="cursor-pointer bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-lg hover:scale-[1.02] transition duration-300"
           >
             <Users className="mb-6 text-purple-400" size={34} />
             <h2 className="text-2xl font-semibold mb-3">
@@ -81,3 +71,4 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+
