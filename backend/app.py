@@ -19,7 +19,7 @@ app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
 CORS(app)
 
 # =========================
-# Database Config
+# Database Configuration
 # =========================
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
@@ -68,7 +68,7 @@ def google_auth():
         email = token_info["email"]
         oauth_id = token_info["sub"]
 
-        # 🔥 Find user in DB
+        # 🔥 Find user in Database
         user = User.query.filter_by(email=email).first()
 
         if not user:
