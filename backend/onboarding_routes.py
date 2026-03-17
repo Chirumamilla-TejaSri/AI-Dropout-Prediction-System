@@ -1,5 +1,17 @@
 from flask import Blueprint, jsonify, request
-from models import db, CounselorInvite, User, CounselorProfile, Student, StudentInvite
+from models import (
+    db,
+    CounselorInvite,
+    User,
+    CounselorProfile,
+    Student,
+    StudentInvite,
+    AssignmentStudent,
+    Submission,
+    CounselingNote,
+    CounselingReply,
+    Notification,
+)
 from google.oauth2 import id_token
 from google.auth.transport import requests as google_requests
 import secrets
@@ -9,6 +21,40 @@ import os
 onboarding_routes = Blueprint("onboarding_routes", __name__)
 
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
+
+
+def reset_rejected_student(email):
+    user = User.query.filter_by(email=email, role="student").first()
+    if not user:
+        return False
+
+    student = Student.query.filter_by(user_id=user.id).first()
+    if not student or student.status != "rejected":
+        return False
+
+    AssignmentStudent.query.filter_by(student_id=student.id).delete()
+    Submission.query.filter_by(student_id=student.id).delete()
+    Notification.query.filter_by(student_id=student.id).delete()
+
+    note_ids = [
+        note_id
+        for (note_id,) in db.session.query(CounselingNote.id)
+        .filter_by(student_id=student.id)
+        .all()
+    ]
+    if note_ids:
+        CounselingReply.query.filter(
+            CounselingReply.note_id.in_(note_ids)
+        ).delete(synchronize_session=False)
+
+    CounselingNote.query.filter_by(student_id=student.id).delete()
+    StudentInvite.query.filter_by(email=email).delete()
+
+    db.session.delete(student)
+    db.session.delete(user)
+    db.session.commit()
+
+    return True
 
 
 # ======================================================
@@ -112,14 +158,29 @@ def send_student_invite():
     if not email:
         return jsonify({"error": "Email required"}), 400
 
+    email = email.strip().lower()
+    reset_rejected_student(email)
+
     # already onboarded → no invite
     if User.query.filter_by(email=email).first():
         return jsonify({"error": "Student already onboarded"}), 400
 
     # existing active invite → block resend
+    existing_invite = StudentInvite.query.filter_by(email=email).first()
+    if existing_invite and existing_invite.used:
+        db.session.delete(existing_invite)
+        db.session.commit()
+
     existing = StudentInvite.query.filter_by(email=email, used=False).first()
     if existing:
-        return jsonify({"error": "Invite already sent"}), 400
+        existing.token = secrets.token_urlsafe(32)
+        db.session.commit()
+
+        link = f"{os.getenv('FRONTEND_URL')}/onboard/student/{existing.token}"
+        if not send_invite_email(email, link, "student"):
+            return jsonify({"error": "Failed to send email"}), 500
+
+        return jsonify({"success": True, "message": "Invite resent"})
 
     token = secrets.token_urlsafe(32)
 
@@ -127,9 +188,9 @@ def send_student_invite():
     db.session.add(invite)
     db.session.commit()
 
-    import os
     link = f"{os.getenv('FRONTEND_URL')}/onboard/student/{token}"
-    send_invite_email(email, link, "student")
+    if not send_invite_email(email, link, "student"):
+        return jsonify({"error": "Failed to send email"}), 500
 
     return jsonify({"success": True})
 
