@@ -2,8 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const GOOGLE_CLIENT_ID =
-  "186185088047-7u42cksaogehbmvfuricjt4t19d7tg48.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 export default function StudentOnboard() {
   const { token } = useParams();

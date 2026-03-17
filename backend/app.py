@@ -87,7 +87,20 @@ def google_auth():
         # 🔥 Student approval check
         if user.role == "student":
             student = Student.query.filter_by(user_id=user.id).first()
-            if not student or student.status != "approved":
+            if not student:
+                return jsonify({
+                    "success": False,
+                    "error": "Waiting for counselor approval"
+                }), 403
+
+            if student.status == "rejected":
+                reason = (student.rejection_reason or "").strip()
+                return jsonify({
+                    "success": False,
+                    "error": f"Your onboarding was rejected: {reason}" if reason else "Your onboarding was rejected by your counselor."
+                }), 403
+
+            if student.status != "approved":
                 return jsonify({
                     "success": False,
                     "error": "Waiting for counselor approval"
