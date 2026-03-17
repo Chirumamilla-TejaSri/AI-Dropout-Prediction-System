@@ -149,7 +149,7 @@ export default function Settings() {
           disabled={loading}
           className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg disabled:opacity-50"
         >
-          {loading ? "Updating..." : "💾 Save Changes"}
+          {loading ? "Updating..." : "Save Changes"}
         </button>
 
         {success && (

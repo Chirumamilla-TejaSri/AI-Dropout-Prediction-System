@@ -364,13 +364,6 @@ function ProfileSection({ profile, profileImage, setProfileImage }) {
   const [semester, setSemester] = useState(profile.semester);
   const [saving, setSaving] = useState(false);
 
-  const handleUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) setProfileImage(URL.createObjectURL(file));
-  };
-
-  const removePhoto = () => setProfileImage(null);
-
   const handleLogout = () => {
     localStorage.removeItem("user_id");
     localStorage.removeItem("role");
@@ -390,75 +383,76 @@ function ProfileSection({ profile, profileImage, setProfileImage }) {
 
   return (
     <>
-      <h2 className="text-3xl font-bold mb-6">Profile</h2>
+      <h2 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent mb-6">
+        Profile Settings
+      </h2>
 
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 space-y-8">
+      <div className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-3xl p-10 space-y-8">
 
         <div className="flex items-center gap-6">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-r from-violet-500 to-purple-600 flex items-center justify-center overflow-hidden">
+          <div className="w-20 h-20 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 flex items-center justify-center overflow-hidden text-2xl font-bold">
             {profileImage ? (
               <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
             ) : (
-              <span className="text-3xl font-bold">
+              <span>
                 {profile.name.charAt(0)}
               </span>
             )}
           </div>
 
-          <div className="flex gap-3">
-            <label className="bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 px-4 py-2 rounded-xl cursor-pointer transition hover:opacity-90">
-              Upload
-              <input type="file" className="hidden" onChange={handleUpload} />
-            </label>
-
-            {profileImage && (
-              <button
-                onClick={removePhoto}
-                className="bg-red-600 px-4 py-2 rounded-xl hover:bg-red-700 transition"
-              >
-                Remove
-              </button>
-            )}
+          <div>
+            <p className="text-xl font-semibold">
+              {profile.name}
+            </p>
+            <p className="text-slate-400">
+              {profile.roll_no}
+            </p>
           </div>
+
         </div>
 
-        <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-8">
           <div>
-            <label className="text-sm text-slate-400">Name</label>
-            <input value={profile.name} disabled className="w-full bg-white/10 p-3 rounded-xl border border-white/20 text-slate-400 mt-1" />
+            <label className="text-sm text-slate-400">Full Name</label>
+            <input value={profile.name} disabled className="w-full bg-white/10 p-3 rounded-xl border border-white/20 text-slate-300 mt-2" />
           </div>
 
           <div>
             <label className="text-sm text-slate-400">Semester</label>
-            <input value={semester} onChange={(e) => setSemester(e.target.value)} className="w-full bg-white/10 p-3 rounded-xl border border-white/20 mt-1" />
+            <input value={semester} onChange={(e) => setSemester(e.target.value)} className="w-full bg-white/10 p-3 rounded-xl border border-white/20 mt-2" />
           </div>
 
           <div>
             <label className="text-sm text-slate-400">Branch</label>
-            <input value={profile.branch} disabled className="w-full bg-white/10 p-3 rounded-xl border border-white/20 text-slate-400 mt-1" />
+            <input value={profile.branch} disabled className="w-full bg-white/5 p-3 rounded-xl border border-white/10 text-slate-400 mt-2" />
+          </div>
+
+          <div>
+            <label className="text-sm text-slate-400">Roll Number</label>
+            <input value={profile.roll_no} disabled className="w-full bg-white/5 p-3 rounded-xl border border-white/10 text-slate-400 mt-2" />
           </div>
         </div>
 
         <button
           onClick={saveProfile}
           disabled={saving}
-          className="w-full bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 py-3 rounded-xl font-semibold hover:scale-[1.02] transition"
+          className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>
 
       </div>
 
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 space-y-4 mt-8">
-        <h3 className="text-2xl font-semibold">
+      <div className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-3xl p-10 space-y-4">
+        <h2 className="text-2xl font-semibold">
           Logout
-        </h3>
+        </h2>
         <p className="text-slate-400">
           Sign out of the student dashboard on this device.
         </p>
         <button
           onClick={handleLogout}
-          className="bg-gradient-to-r from-indigo-600 via-violet-600 to-fuchsia-500 px-6 py-3 rounded-xl font-semibold hover:scale-[1.02] transition"
+          className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg"
         >
           Logout
         </button>

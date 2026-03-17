@@ -81,7 +81,7 @@ export default function Assignments() {
       formData
     );
 
-    alert("Assignment Created Successfully 🚀");
+    alert("Assignment created successfully");
 
     setTitle("");
     setDescription("");
@@ -162,7 +162,7 @@ export default function Assignments() {
           onClick={createAssignment}
           className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 py-3 rounded-xl"
         >
-          🚀 Create Assignment
+          Create Assignment
         </button>
       </div>
 
