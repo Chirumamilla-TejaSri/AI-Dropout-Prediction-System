@@ -27,6 +27,14 @@ export default function MyStudents() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold">My Students</h1>
 
+      {/* ✅ ADDED BUTTON */}
+      <button
+        onClick={() => navigate("/counselor/schedule-meeting")}
+        className="bg-indigo-600 px-4 py-2 rounded text-white"
+      >
+        Schedule Meeting
+      </button>
+
       {students.length === 0 && (
         <p className="text-slate-400">
           No approved students yet
@@ -41,7 +49,6 @@ export default function MyStudents() {
                      flex justify-between items-center cursor-pointer 
                      hover:bg-white/10 transition duration-200"
         >
-          {/* Left Section */}
           <div>
             <p className="font-semibold text-lg">{s.name}</p>
             <p className="text-slate-400 text-sm">
@@ -49,7 +56,6 @@ export default function MyStudents() {
             </p>
           </div>
 
-          {/* Right Section */}
           <div className="flex items-center gap-4">
             <RiskBadge level={s.risk_level} />
           </div>
