@@ -2,8 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-const GOOGLE_CLIENT_ID =
-  "186185088047-7u42cksaogehbmvfuricjt4t19d7tg48.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 const CounselorOnboard = () => {
   const { token } = useParams();
@@ -36,14 +35,8 @@ const CounselorOnboard = () => {
   // Load Google Button (Fixed)
   // =============================
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://accounts.google.com/gsi/client";
-    script.async = true;
-    script.defer = true;
-
-    script.onload = () => {
-      if (!window.google || !googleBtnRef.current) return;
-
+  const loadGoogleScript = () => {
+    if (window.google && googleBtnRef.current) {
       window.google.accounts.id.initialize({
         client_id: GOOGLE_CLIENT_ID,
         callback: (res) => {
@@ -56,10 +49,21 @@ const CounselorOnboard = () => {
         googleBtnRef.current,
         { theme: "outline", size: "large", width: 320 }
       );
-    };
+    }
+  };
 
+  if (!document.getElementById("google-script")) {
+    const script = document.createElement("script");
+    script.id = "google-script";
+    script.src = "https://accounts.google.com/gsi/client";
+    script.async = true;
+    script.defer = true;
+    script.onload = loadGoogleScript;
     document.body.appendChild(script);
-  }, []);
+  } else {
+    loadGoogleScript();
+  }
+}, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });

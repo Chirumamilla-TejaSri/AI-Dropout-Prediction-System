@@ -31,6 +31,8 @@ import Reports from "./pages/counselor/Reports";
 import Settings from "./pages/counselor/Settings";
 import StudentDetails from "./pages/counselor/StudentDetails";
 
+import ScheduleMeeting from "./pages/counselor/ScheduleMeeting";
+
 
 function App() {
   return (
@@ -68,6 +70,7 @@ function App() {
       <Route path="reports" element={<Reports />} />
       <Route path="settings" element={<Settings />} />
       <Route path="student/:studentId" element={<StudentDetails />} />
+      <Route path="schedule-meeting" element={<ScheduleMeeting />} />
     </Route>
 
     </Routes>

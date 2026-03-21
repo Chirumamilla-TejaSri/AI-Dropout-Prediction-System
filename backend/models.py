@@ -50,6 +50,7 @@ class Student(db.Model):
     semester = db.Column(db.String(20), nullable=False)
     counselor_id = db.Column(db.Integer, db.ForeignKey("users.id"))
     status = db.Column(db.String(20), default="pending")
+    rejection_reason = db.Column(db.Text)
     created_at = db.Column(db.DateTime)
     
 class StudentInvite(db.Model):

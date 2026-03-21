@@ -40,6 +40,7 @@ def approve_student(counselor_id, student_id):
         return jsonify({"error": "Unauthorized"}), 403
 
     student.status = "approved"
+    student.rejection_reason = None
     db.session.commit()
 
     return jsonify({"success": True})
@@ -59,7 +60,14 @@ def reject_student(counselor_id, student_id):
     if student.counselor_id != counselor_id:
         return jsonify({"error": "Unauthorized"}), 403
 
+    data = request.json or {}
+    reason = (data.get("reason") or "").strip()
+
+    if not reason:
+        return jsonify({"error": "Rejection reason is required"}), 400
+
     student.status = "rejected"
+    student.rejection_reason = reason
     db.session.commit()
 
     return jsonify({"success": True})

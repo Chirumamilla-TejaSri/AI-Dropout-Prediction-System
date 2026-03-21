@@ -3,11 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { googleAuthLogin } from "../services/api";
 import { LogIn, UserCircle } from "lucide-react";
 
-const GOOGLE_CLIENT_ID =
-  import.meta.env.VITE_GOOGLE_CLIENT_ID ||
-  "186185088047-7u42cksaogehbmvfuricjt4t19d7tg48.apps.googleusercontent.com";
-
-console.log("USING CLIENT ID:", GOOGLE_CLIENT_ID);
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 export default function LoginPage() {
   const navigate = useNavigate();
