@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Bell } from "lucide-react";
+import {
+  Bell,
+  LayoutDashboard,
+  BookOpen,
+  FileText,
+  UserCircle
+} from "lucide-react";
 
 const API = "http://localhost:5000";
 
@@ -32,7 +38,6 @@ export default function StudentDashboard() {
       .get(`${API}/student/notifications/list/${userId}`)
       .then((res) => setNotifications(res.data))
       .catch((err) => console.error(err));
-
   }, [userId]);
 
   if (!data) {
@@ -46,58 +51,77 @@ export default function StudentDashboard() {
   const { profile, prediction, notes, assignments } = data;
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-[#0f0c29] via-[#302b63] to-[#24243e] text-white">
+    <div className="flex min-h-screen bg-gradient-to-br from-slate-950 to-indigo-950 text-white">
 
       {/* SIDEBAR */}
-      <div className="w-64 bg-black/40 backdrop-blur-2xl border-r border-white/10 p-6 flex flex-col justify-between">
-
+      <div className="w-64 bg-white/5 backdrop-blur-xl border-r border-white/10 p-6 flex flex-col">
         <div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-violet-400 to-purple-500 bg-clip-text text-transparent mb-8">
-            Student Panel
-          </h1>
+          <h1 className="text-2xl font-bold mb-10">Student</h1>
 
-          <SidebarItem label="Dashboard" active={activeTab === "dashboard"} onClick={() => setActiveTab("dashboard")} />
-          <SidebarItem label="Counseling" active={activeTab === "counseling"} onClick={() => setActiveTab("counseling")} />
-          <SidebarItem label="Assignments" active={activeTab === "assignments"} onClick={() => setActiveTab("assignments")} />
-          <SidebarItem label="Profile" active={activeTab === "profile"} onClick={() => setActiveTab("profile")} />
+          <nav className="flex flex-col gap-4 text-sm">
+            <SidebarItem
+              label="Dashboard"
+              icon={<LayoutDashboard size={18} />}
+              active={activeTab === "dashboard"}
+              onClick={() => setActiveTab("dashboard")}
+            />
+            <SidebarItem
+              label="Counseling"
+              icon={<BookOpen size={18} />}
+              active={activeTab === "counseling"}
+              onClick={() => setActiveTab("counseling")}
+            />
+            <SidebarItem
+              label="Assignments"
+              icon={<FileText size={18} />}
+              active={activeTab === "assignments"}
+              onClick={() => setActiveTab("assignments")}
+            />
+            <SidebarItem
+              label="Profile"
+              icon={<UserCircle size={18} />}
+              active={activeTab === "profile"}
+              onClick={() => setActiveTab("profile")}
+            />
+          </nav>
         </div>
 
-        <div className="h-32 bg-gradient-to-t from-violet-600/30 blur-2xl rounded-full"></div>
+        <div className="h-32 bg-gradient-to-t from-slate-700/30 blur-2xl rounded-full"></div>
       </div>
 
       {/* MAIN */}
-      <div className="flex-1 p-8 overflow-y-auto">
+      <div className="flex-1 flex flex-col">
 
         {/* TOP NAV */}
-        <div className="flex justify-end items-center gap-6 mb-8">
+        <div className="flex justify-end items-center p-6 border-b border-white/10">
 
           {/* NOTIFICATION */}
           <div className="relative">
             <div
               onClick={async () => {
-  const newState = !dropdownOpen;
-        setDropdownOpen(newState);
+                const newState = !dropdownOpen;
+                setDropdownOpen(newState);
 
-        if (!dropdownOpen) {
-          for (const n of notifications) {
-            if (!n.is_read) {
-              await axios.post(
-                `${API}/student/notifications/read/${n.id}`
-              );
-            }
-          }
+                if (!dropdownOpen) {
+                  for (const n of notifications) {
+                    if (!n.is_read) {
+                      await axios.post(
+                        `${API}/student/notifications/read/${n.id}`
+                      );
+                    }
+                  }
 
-          setNotificationCount(0);
+                  setNotificationCount(0);
 
-          const res = await axios.get(
-            `${API}/student/notifications/list/${userId}`
-          );
-          setNotifications(res.data);
-        }
-      }}
-              className="relative bg-indigo-600/30 p-2 rounded-full hover:bg-indigo-600 transition cursor-pointer"
+                  const res = await axios.get(
+                    `${API}/student/notifications/list/${userId}`
+                  );
+                  setNotifications(res.data);
+                }
+              }}
+              className="relative bg-white/10 p-2 rounded-full hover:bg-indigo-600 transition cursor-pointer"
             >
-              <Bell size={18} className="text-indigo-300" />
+              <Bell size={18} className="text-indigo-400" />
               {notificationCount > 0 && (
                 <span className="absolute -top-1 -right-1 bg-red-600 text-[10px] px-1.5 rounded-full">
                   {notificationCount}
@@ -106,7 +130,7 @@ export default function StudentDashboard() {
             </div>
 
             {dropdownOpen && (
-              <div className="absolute right-0 mt-3 w-72 bg-[#1e1b4b] border border-white/10 rounded-2xl shadow-xl z-50 max-h-80 overflow-y-auto">
+              <div className="absolute right-0 mt-3 w-72 bg-slate-900 border border-white/10 rounded-2xl shadow-xl z-50 max-h-80 overflow-y-auto">
                 <div className="p-3 border-b border-white/10 font-semibold">
                   Notifications
                 </div>
@@ -131,55 +155,47 @@ export default function StudentDashboard() {
             )}
           </div>
 
-          {/* PROFILE */}
-          <div
-            onClick={() => setActiveTab("profile")}
-            className="flex items-center gap-3 cursor-pointer hover:opacity-80 transition"
-          >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-violet-500 to-purple-600 flex items-center justify-center font-bold">
-              {profile.name.charAt(0)}
-            </div>
-            <span className="text-sm">{profile.name}</span>
-          </div>
-
         </div>
 
-        {/* TABS */}
-        {activeTab === "dashboard" && (
-          <DashboardSection profile={profile} prediction={prediction} />
-        )}
+        <div className="p-10 overflow-y-auto">
+          {/* TABS */}
+          {activeTab === "dashboard" && (
+            <DashboardSection profile={profile} prediction={prediction} />
+          )}
 
-        {activeTab === "counseling" && (
-          <CounselingSection notes={notes} profile={profile} />
-        )}
+          {activeTab === "counseling" && (
+            <CounselingSection notes={notes} profile={profile} />
+          )}
 
-        {activeTab === "assignments" && (
-          <AssignmentSection assignments={assignments} />
-        )}
+          {activeTab === "assignments" && (
+            <AssignmentSection assignments={assignments} />
+          )}
 
-        {activeTab === "profile" && (
-          <ProfileSection
-            profile={profile}
-            profileImage={profileImage}
-            setProfileImage={setProfileImage}
-          />
-        )}
+          {activeTab === "profile" && (
+            <ProfileSection
+              profile={profile}
+              profileImage={profileImage}
+              setProfileImage={setProfileImage}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
 }
 
 /* SIDEBAR ITEM */
-function SidebarItem({ label, active, onClick }) {
+function SidebarItem({ label, icon, active, onClick }) {
   return (
     <button
       onClick={onClick}
-      className={`w-full text-left px-4 py-3 rounded-xl mb-3 transition-all duration-300 ${
+      className={`w-full text-left px-4 py-3 rounded-xl transition flex items-center gap-3 ${
         active
-          ? "bg-gradient-to-r from-violet-600 to-purple-600 shadow-lg"
-          : "hover:bg-white/10"
+          ? "bg-indigo-600 text-white"
+          : "hover:bg-white/10 text-slate-300"
       }`}
     >
+      {icon}
       {label}
     </button>
   );
@@ -199,11 +215,11 @@ function DashboardSection({ profile, prediction }) {
 
   return (
     <>
-      <h2 className="text-3xl font-bold mb-6">
-        Welcome back, {profile.name}
+      <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent inline-block">
+        Welcome, {profile.name}
       </h2>
 
-      <div className="grid grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl">
         <StatCard label="CGPA" value={prediction?.cgpa ?? "N/A"} />
         <StatCard label="Attendance" value={prediction?.attendance ?? "N/A"} />
         <StatCard label="Backlogs" value={prediction?.backlogs ?? 0} />
@@ -256,7 +272,7 @@ function CounselingSection({ notes, profile }) {
           <div key={i} className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-6">
 
             <div className="flex justify-between mb-2">
-              <span className="bg-violet-600/30 px-3 py-1 rounded-full text-sm">
+              <span className="bg-indigo-600/30 px-3 py-1 rounded-full text-sm">
                 {n.note_type}
               </span>
               <span className="text-slate-400 text-sm">
@@ -306,7 +322,7 @@ function CounselingSection({ notes, profile }) {
 
               <button
                 onClick={() => handleReply(n.id)}
-                className="bg-gradient-to-r from-violet-600 to-purple-600 px-4 py-2 rounded-xl"
+                className="bg-gradient-to-r from-indigo-600 via-blue-600 to-cyan-500 px-4 py-2 rounded-xl"
               >
                 Send Reply
               </button>
@@ -362,12 +378,12 @@ function ProfileSection({ profile, profileImage, setProfileImage }) {
   const [semester, setSemester] = useState(profile.semester);
   const [saving, setSaving] = useState(false);
 
-  const handleUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) setProfileImage(URL.createObjectURL(file));
+  const handleLogout = () => {
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("role");
+    localStorage.removeItem("admin_branch");
+    window.location.href = "/login";
   };
-
-  const removePhoto = () => setProfileImage(null);
 
   const saveProfile = async () => {
     setSaving(true);
@@ -381,63 +397,79 @@ function ProfileSection({ profile, profileImage, setProfileImage }) {
 
   return (
     <>
-      <h2 className="text-3xl font-bold mb-6">Profile</h2>
+      <h2 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 via-blue-400 to-cyan-400 bg-clip-text text-transparent inline-block mb-6">
+        Profile Settings
+      </h2>
 
-      <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 space-y-8">
+      <div className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-3xl p-10 space-y-8">
 
         <div className="flex items-center gap-6">
-          <div className="w-24 h-24 rounded-full bg-gradient-to-r from-violet-500 to-purple-600 flex items-center justify-center overflow-hidden">
+          <div className="w-20 h-20 rounded-full bg-gradient-to-r from-indigo-500 to-blue-500 flex items-center justify-center overflow-hidden text-2xl font-bold">
             {profileImage ? (
               <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
             ) : (
-              <span className="text-3xl font-bold">
+              <span>
                 {profile.name.charAt(0)}
               </span>
             )}
           </div>
 
-          <div className="flex gap-3">
-            <label className="bg-violet-600 px-4 py-2 rounded-xl cursor-pointer hover:bg-violet-700 transition">
-              Upload
-              <input type="file" className="hidden" onChange={handleUpload} />
-            </label>
-
-            {profileImage && (
-              <button
-                onClick={removePhoto}
-                className="bg-red-600 px-4 py-2 rounded-xl hover:bg-red-700 transition"
-              >
-                Remove
-              </button>
-            )}
+          <div>
+            <p className="text-xl font-semibold">
+              {profile.name}
+            </p>
+            <p className="text-slate-400">
+              {profile.roll_no}
+            </p>
           </div>
+
         </div>
 
-        <div className="space-y-4">
+        <div className="grid grid-cols-2 gap-8">
           <div>
-            <label className="text-sm text-slate-400">Name</label>
-            <input value={profile.name} disabled className="w-full bg-white/10 p-3 rounded-xl border border-white/20 text-slate-400 mt-1" />
+            <label className="text-sm text-slate-400">Full Name</label>
+            <input value={profile.name} disabled className="w-full bg-white/10 p-3 rounded-xl border border-white/20 text-slate-300 mt-2" />
           </div>
 
           <div>
             <label className="text-sm text-slate-400">Semester</label>
-            <input value={semester} onChange={(e) => setSemester(e.target.value)} className="w-full bg-white/10 p-3 rounded-xl border border-white/20 mt-1" />
+            <input value={semester} onChange={(e) => setSemester(e.target.value)} className="w-full bg-white/10 p-3 rounded-xl border border-white/20 mt-2" />
           </div>
 
           <div>
             <label className="text-sm text-slate-400">Branch</label>
-            <input value={profile.branch} disabled className="w-full bg-white/10 p-3 rounded-xl border border-white/20 text-slate-400 mt-1" />
+            <input value={profile.branch} disabled className="w-full bg-white/5 p-3 rounded-xl border border-white/10 text-slate-400 mt-2" />
+          </div>
+
+          <div>
+            <label className="text-sm text-slate-400">Roll Number</label>
+            <input value={profile.roll_no} disabled className="w-full bg-white/5 p-3 rounded-xl border border-white/10 text-slate-400 mt-2" />
           </div>
         </div>
 
         <button
           onClick={saveProfile}
           disabled={saving}
-          className="w-full bg-gradient-to-r from-violet-600 to-purple-600 py-3 rounded-xl font-semibold hover:scale-[1.02] transition"
+          className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg disabled:opacity-50"
         >
           {saving ? "Saving..." : "Save Changes"}
         </button>
 
+      </div>
+
+      <div className="bg-white/5 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-3xl p-10 space-y-4">
+        <h2 className="text-2xl font-semibold">
+          Logout
+        </h2>
+        <p className="text-slate-400">
+          Sign out of the student dashboard on this device.
+        </p>
+        <button
+          onClick={handleLogout}
+          className="bg-gradient-to-r from-indigo-600 to-blue-600 px-6 py-3 rounded-xl font-semibold hover:scale-[1.02] transition duration-300 shadow-lg"
+        >
+          Logout
+        </button>
       </div>
     </>
   );
@@ -451,3 +483,6 @@ function StatCard({ label, value }) {
     </div>
   );
 }
+
+
+

@@ -15,20 +15,28 @@ const Settingspage = () => {
     alert("Stored predictions cleared");
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("user_id");
+    localStorage.removeItem("role");
+    localStorage.removeItem("admin_branch");
+    localStorage.removeItem("predictions");
+    window.location.href = "/login";
+  };
+
   const handleSave = () => {
     console.log("Saved Data:", { fullName, email });
     alert("Profile updated successfully ✅");
   };
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-br from-[#0f172a] via-[#0b1120] to-[#111827] text-white">
+    <div className="flex min-h-screen bg-gradient-to-br from-slate-950 to-indigo-950 text-white">
       <Sidebar />
 
       <div className="flex-1 p-10 space-y-12">
 
         {/* Header */}
         <div>
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-blue-500 bg-clip-text text-transparent">
+          <h1 className="text-4xl font-bold">
             Settings
           </h1>
           <p className="text-gray-400 mt-2">
@@ -121,6 +129,21 @@ const Settingspage = () => {
             className="bg-gradient-to-r from-gray-700 to-gray-800 px-6 py-3 rounded-xl hover:scale-105 transition shadow-lg"
           >
             Clear Stored Predictions
+          </button>
+        </div>
+
+        <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 space-y-4 shadow-xl">
+          <h2 className="text-2xl font-semibold">
+            Logout
+          </h2>
+          <p className="text-gray-400 text-sm">
+            Sign out of the admin dashboard on this device.
+          </p>
+          <button
+            onClick={handleLogout}
+            className="bg-gradient-to-r from-indigo-600 to-blue-600 px-6 py-3 rounded-xl font-semibold hover:scale-105 transition shadow-lg shadow-indigo-500/30"
+          >
+            Logout
           </button>
         </div>
 

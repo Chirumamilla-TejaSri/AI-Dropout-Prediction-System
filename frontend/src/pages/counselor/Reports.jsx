@@ -49,7 +49,7 @@ export default function Reports() {
   return (
     <div className="space-y-14">
 
-      <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+      <h1 className="text-4xl font-bold text-white">
         Risk Reports
       </h1>
 
@@ -69,9 +69,9 @@ export default function Reports() {
 
         <button
           onClick={downloadCSV}
-          className="bg-gradient-to-r from-indigo-600 to-purple-600 px-6 py-2 rounded-xl"
+          className="bg-gradient-to-r from-indigo-600 to-blue-600 px-6 py-2 rounded-xl"
         >
-          ⬇ Download CSV
+          Download CSV
         </button>
 
       </div>
@@ -108,3 +108,5 @@ export default function Reports() {
     </div>
   );
 }
+
+

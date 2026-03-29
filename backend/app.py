@@ -11,21 +11,31 @@ from student_routes import student_routes
 from flask import send_from_directory
 import os
 from dotenv import load_dotenv
+from flask_mail import Mail
+from meeting_routes import meeting_bp
 # AI model integration added
 load_dotenv()
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+
+app.config["MAIL_SERVER"] = "smtp.gmail.com"
+app.config["MAIL_PORT"] = 465
+app.config["MAIL_USE_SSL"] = True
+app.config["MAIL_USE_TLS"] = False
+app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME")
+app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD")
+app.config["MAIL_DEFAULT_SENDER"] = os.getenv("MAIL_USERNAME")
 CORS(app)
 
 # =========================
-# Database Config
+# Database Configuration
 # =========================
 
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
+mail = Mail(app)
 db.init_app(app)
 migrate = Migrate(app, db)
 
@@ -33,6 +43,7 @@ app.register_blueprint(admin_routes)
 app.register_blueprint(onboarding_routes)
 app.register_blueprint(counselor_routes)
 app.register_blueprint(student_routes)
+app.register_blueprint(meeting_bp)
 
 GOOGLE_CLIENT_ID = os.getenv("GOOGLE_CLIENT_ID")
 
@@ -68,7 +79,7 @@ def google_auth():
         email = token_info["email"]
         oauth_id = token_info["sub"]
 
-        # 🔥 Find user in DB
+        # 🔥 Find user in Database
         user = User.query.filter_by(email=email).first()
 
         if not user:

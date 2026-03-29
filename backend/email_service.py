@@ -91,3 +91,14 @@ EduPredict Team
     except Exception as e:
         print("Email error:", e)
         return False
+def send_email(to, subject, body):
+    from flask_mail import Message
+    from app import mail
+
+    msg = Message(
+    subject,
+    sender=os.getenv("MAIL_USERNAME"),
+    recipients=[to],
+    body=body
+)
+    mail.send(msg)

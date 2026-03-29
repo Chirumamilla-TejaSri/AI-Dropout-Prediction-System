@@ -71,7 +71,7 @@ Admin → Flask Backend → Feature Engineering → Random Forest Model → MySQ
 Frontend: React
 Backend: Flask
 Database: MySQL
-Authentication: Google OAuth
+Authentication: Google OAuth 2.0
 
 📈 Model Evaluation
 
@@ -83,10 +83,12 @@ Confusion Matrix
 
 🚀 Future Scope
 
-Real institutional dataset integration
+ Integration with real institutional datasets
+ 
+ SMS and email alerts for at-risk students
 
-LSTM-based trend modeling
+ LMS integration for automatic data updates
+ 
+ Improved prediction using advanced models like LSTM
 
-SMS / Email alerts
-
-LMS integration
+ Enhanced dashboards for counselors and administrators

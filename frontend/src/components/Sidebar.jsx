@@ -38,39 +38,27 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="w-64 min-h-screen p-8 
-                    bg-white/5 backdrop-blur-2xl 
-                    border-r border-white/10 
-                    shadow-2xl">
+    <div className="w-64 min-h-screen p-6 bg-white/5 backdrop-blur-xl border-r border-white/10 flex flex-col">
+      <h2 className="text-2xl font-bold mb-10">Admin</h2>
 
-      <h2 className="text-2xl font-bold mb-12 
-                     bg-gradient-to-r from-indigo-400 to-purple-500 
-                     bg-clip-text text-transparent">
-        Admin Panel
-      </h2>
-
-      <div className="space-y-3">
+      <nav className="flex flex-col gap-4 text-sm">
         {menuItems.map((item) => (
           <NavLink
             key={item.name}
             to={item.path}
             className={({ isActive }) =>
-              `flex items-center gap-3 px-5 py-3 rounded-xl 
-               transition-all duration-300 ${
+              `flex items-center gap-3 px-4 py-3 rounded-xl transition ${
                 isActive
-                  ? "bg-gradient-to-r from-indigo-600 to-blue-600 text-white shadow-lg shadow-indigo-500/30"
-                  : "text-slate-400 hover:bg-white/10 hover:text-white hover:shadow-md"
+                  ? "bg-indigo-600 text-white"
+                  : "hover:bg-white/10 text-slate-300"
               }`
             }
           >
             {item.icon}
-            <span className="text-sm font-medium">
-              {item.name}
-            </span>
+            {item.name}
           </NavLink>
         ))}
-      </div>
-
+      </nav>
     </div>
   );
 };

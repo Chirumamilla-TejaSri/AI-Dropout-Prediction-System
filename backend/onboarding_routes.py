@@ -262,9 +262,10 @@ def complete_student_onboarding():
 
         return jsonify({"success": True})
 
-    except Exception:
-        db.session.rollback()
-        return jsonify({"error": "Database error"}), 500
+    except Exception as e:
+        print("🔥 REAL ERROR:", e)
+    db.session.rollback()
+    return jsonify({"error": str(e)}), 500
 @onboarding_routes.route("/student/status/<email>")
 def student_status(email):
     user = User.query.filter_by(email=email).first()

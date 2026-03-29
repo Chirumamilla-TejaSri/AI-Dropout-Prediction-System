@@ -81,7 +81,7 @@ export default function Assignments() {
       formData
     );
 
-    alert("Assignment Created Successfully 🚀");
+    alert("Assignment created successfully");
 
     setTitle("");
     setDescription("");
@@ -103,7 +103,7 @@ export default function Assignments() {
     <div className="space-y-14">
 
       {/* CREATE ASSIGNMENT */}
-      <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-400 to-purple-500 bg-clip-text text-transparent">
+      <h1 className="text-4xl font-bold text-white">
         Create Assignment
       </h1>
 
@@ -160,9 +160,9 @@ export default function Assignments() {
 
         <button
           onClick={createAssignment}
-          className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 py-3 rounded-xl"
+          className="w-full bg-gradient-to-r from-indigo-600 to-blue-600 py-3 rounded-xl"
         >
-          🚀 Create Assignment
+          Create Assignment
         </button>
       </div>
 
@@ -217,3 +217,6 @@ export default function Assignments() {
     </div>
   );
 }
+
+
+
